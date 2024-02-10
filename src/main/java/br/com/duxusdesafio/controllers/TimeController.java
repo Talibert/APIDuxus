@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 
 import br.com.duxusdesafio.dtos.TimeDto;
 import br.com.duxusdesafio.model.ComposicaoTime;
+import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
 import br.com.duxusdesafio.repositories.ComposicaoTimeRepository;
 import br.com.duxusdesafio.repositories.IntegranteRepository;
@@ -85,9 +87,8 @@ public class TimeController {
 
     @GetMapping("/timenadata")
     public ResponseEntity<Map<String, Object>> getTimeNaData(
-        
-        // Pegando a data dos parâmetros da requisição
-        @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+                    // Pegando a data dos parâmetros da requisição
+                    @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
 
             // Coloca todos os times em uma lista de Time
             List<Time> times = timeRepository.findAll();
@@ -101,8 +102,30 @@ public class TimeController {
             //Passa a key timeDaData com o timeDaData retornado
             timeNaData.put("timeDaData", timeNaData.get("timeDaData"));
             
-    
+            //Retorno da resposta
             return new ResponseEntity<>(timeNaData, HttpStatus.OK);
+    }
+
+    @GetMapping("/integrantemaisusado")
+    public ResponseEntity<Map<String, Object>> integranteMaisUsado(
+                    // Pegando a data dos parâmetros da requisição
+                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal)
+        
+        {
+
+            // Coloca todos os times em uma lista de Time
+            List<Time> times = timeRepository.findAll();
+            // Chama o método timeDaData e passa data e a lista de times como argumento
+            Integrante integrante = apiService.integranteMaisUsado(dataInicial, dataFinal, times);
+            // Criando um Map que irá receber o integrante mais usado
+            Map<String, Object> integranteMaisUsado = new HashMap<>();
+
+            // Passando a key "integrante mais usado" e pegando o nome do integrante
+            integranteMaisUsado.put("Integrante Mais Usado", integrante.getNome());
+
+            //Retorno da resposta
+            return new ResponseEntity<>(integranteMaisUsado, HttpStatus.OK);
     }
 
 }

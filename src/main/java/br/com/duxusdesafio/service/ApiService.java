@@ -29,12 +29,13 @@ public class ApiService {
         List<String> timeDaData = new ArrayList<>();
         String timeNome = "";
 
-        // Iterando em cada time
+        // Iterando por todos os times
         for (Time time : todosOsTimes) {
-            // Logica para ver se a data do time é igual a data definida pelo usuario
+            // Verificando se data do time é igual a data fornecida
             if (time.getData().equals(data)) {
-                // Iterando a composição
-                    timeNome = time.getNome();
+                // Pegando o nome do time
+                timeNome = time.getNome();
+                // Iterando a composição e adicionando ao time
                 for (ComposicaoTime composicaoTime : time.getComposicaoTime()) {
                     timeDaData.add(composicaoTime.getIntegrante().getNome());
                     
@@ -55,8 +56,45 @@ public class ApiService {
      * dentro do período
      */
     public Integrante integranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+
+         // Criando um Map para armazenar a contagem de cada integrante
+        Map<Integrante, Integer> integranteContagem = new HashMap<>();
+
+        // Iterando por todos os times
+        for (Time time : todosOsTimes) {
+            // Verificando se a data do time está dentro da data fornecida
+            if(!time.getData().isBefore(dataInicial) && !time.getData().isAfter(dataFinal)) {
+                // Iterando as composições para pegar os integrantes
+                for (ComposicaoTime composicaoTime : time.getComposicaoTime()){
+                    // Verificando se o integrante já está no mapa
+                    if (integranteContagem.containsKey(composicaoTime.getIntegrante())) {
+                        // Se estiver, incrementa a contagem
+                        integranteContagem.put(composicaoTime.getIntegrante(), integranteContagem.get(composicaoTime.getIntegrante()) + 1);
+                    } else {
+                        // Se não estiver, adiciona ao mapa com contagem 1
+                        integranteContagem.put(composicaoTime.getIntegrante(), 1);
+                    }
+                }
+            }
+        }
+
+        // Encontrando o integrante com a maior contagem
+        Integrante integranteMaisUsado = null;
+        int maiorContagem = 0;
+        
+        // Percorrento as posições do map integranteContagem
+        for (Map.Entry<Integrante, Integer> entry : integranteContagem.entrySet()) {
+            // Se o valor do elemento atual for a maior contagem, atualiza o valor e a chave
+            if (entry.getValue() > maiorContagem) {
+                // Atribui o valor da contagem para comparar na próxima iteração
+                maiorContagem = entry.getValue();
+                // Atribui o valor da chave para pegar o nome do Integrante
+                integranteMaisUsado = entry.getKey();
+            }
+        }
+
+        // Retorna o valor atribuido pela chave que mais apareceu com maior contagem
+        return integranteMaisUsado;
     }
 
     /**
