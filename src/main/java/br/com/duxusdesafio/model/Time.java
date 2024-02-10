@@ -35,7 +35,8 @@ public class Time {
 	public Time() {
 	}
 
-	public Time(LocalDate data, List<ComposicaoTime> composicaoTime) {
+	public Time(String nome, LocalDate data, List<ComposicaoTime> composicaoTime) {
+		this.nome = nome;
 		this.data = data;
 		this.composicaoTime = composicaoTime;
 	}
@@ -54,6 +55,14 @@ public class Time {
 
 	public void setData(LocalDate data) {
 		this.data = data;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public List<ComposicaoTime> getComposicaoTime() {

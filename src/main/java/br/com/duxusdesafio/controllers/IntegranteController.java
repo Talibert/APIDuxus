@@ -17,6 +17,7 @@ import br.com.duxusdesafio.repositories.IntegranteRepository;
 @RequestMapping("/duxus/integrante")
 public class IntegranteController {
 
+    // Injeção das dependencias do IntegranteRepository
     @Autowired
     private IntegranteRepository integranteRepository;
 
@@ -29,8 +30,10 @@ public class IntegranteController {
         integrante.setFranquia(dto.getFranquia());
         integrante.setFuncao(dto.getFuncao());
 
+        // Salvado o integrante no banco de dados
         integranteRepository.save(integrante);
 
+        // Retorno do JSON
         return ResponseEntity.ok(integrante);
 
     }

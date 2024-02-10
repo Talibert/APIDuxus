@@ -52,9 +52,9 @@ public class DadosParaTesteApiService {
         denis_rodman = new Integrante(franquiaNBA, "Denis Rodman", "ala-pivô", composicaoTime1995);
         scottie_pippen = new Integrante(franquiaNBA, "Scottie Pippen", "ala", composicaoTime1995);
 
-        timeChicagoBullsDe1994 = new Time(data1994, composicaoTime1994);
-        timeChicagoBullsDe1995 = new Time(data1995, composicaoTime1995);
-        timeDetroidPistonsDe1993 = new Time(data1993, composicaoTime1993);
+        timeChicagoBullsDe1994 = new Time("Chicago Bulls 1994", data1994, composicaoTime1994);
+        timeChicagoBullsDe1995 = new Time("Chicago Bulls 1995" ,data1995, composicaoTime1995);
+        timeDetroidPistonsDe1993 = new Time("Detroid Pistons 1993" ,data1993, composicaoTime1993);
 
         // composição chicago bulls
         composicaoTime1994.add(new ComposicaoTime(timeChicagoBullsDe1994, michael_jordan));
