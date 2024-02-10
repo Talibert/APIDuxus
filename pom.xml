@@ -63,11 +63,6 @@
 			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.tngtech.junit.dataprovider/junit4-dataprovider -->
 		<dependency>
