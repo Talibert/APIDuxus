@@ -104,9 +104,54 @@ public class ApiService {
      * dentro do período
      */
     public List<String> timeMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
-    }
+
+        // Criando um Map para armazenar a contagem de cada integrante
+        Map<Integrante, Integer> timeContagem = new HashMap<>();
+        
+        // Iterando por todos os times
+        for (Time time : todosOsTimes) {
+            // Verificando se a data do time está dentro da data fornecida
+            if(!time.getData().isBefore(dataInicial) && !time.getData().isAfter(dataFinal)) {
+                // Iterando as composições para pegar os integrantes
+                for (ComposicaoTime composicaoTime : time.getComposicaoTime()){
+                    // Verificando se o integrante já está no mapa
+                    if (timeContagem.containsKey(composicaoTime.getIntegrante())) {
+                        // Se estiver, incrementa a contagem
+                        timeContagem.put(composicaoTime.getIntegrante(), timeContagem.get(composicaoTime.getIntegrante()) + 1);
+                    } else {
+                        // Se não estiver, adiciona ao mapa com contagem 1
+                        timeContagem.put(composicaoTime.getIntegrante(), 1);
+                    }
+                }
+            }
+        }
+
+        // List<ComposicaoTime> timeMaisComum = new ArrayList<>();
+        // int maiorContagem = 0;
+
+        // // Percorrento as posições do map integranteContagem
+        // for (Map.Entry<ComposicaoTime, Integer> entry : timeContagem.entrySet()) {
+        //     // Se o valor do elemento atual for a maior contagem, atualiza o valor e a chave
+        //     if (entry.getValue() > maiorContagem) {
+        //         // Atribui o valor da contagem para comparar na próxima iteração
+        //         maiorContagem = entry.getValue();
+        //         // Atribui o valor da chave para pegar o nome do Integrante
+        //         timeMaisComum.add(entry.getKey());
+        //     }
+        // }
+
+        // Construindo a lista de Strings com os nomes dos integrantes da composição de time mais comum
+        List<String> integrantesMaisUsados = new ArrayList<>();
+        // String nomeIntegrante = "";
+        //     if (timeMaisComum != null) {
+        //         for (ComposicaoTime composicaoTime : timeMaisComum) {
+        //             nomeIntegrante = composicaoTime.getIntegrante().getNome();
+        //             integrantesMaisUsados.add(nomeIntegrante);
+        //         }
+        //     }
+            System.out.println(timeContagem);
+            return integrantesMaisUsados;
+        }
 
     /**
      * @param dataInicial pode ser nulo
@@ -114,21 +159,54 @@ public class ApiService {
      * @return Vai retornar a função mais comum nos times dentro do período
      */
     public String funcaoMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+        Map<String, Integer> funcaoContagem = new HashMap<>();
+
+        // Iterando por todos os times
+        for (Time time : todosOsTimes) {
+            // Verificando se a data do time está dentro da data fornecida
+            if(!time.getData().isBefore(dataInicial) && !time.getData().isAfter(dataFinal)) {
+                // Iterando as composições para pegar os integrantes
+                for (ComposicaoTime composicaoTime : time.getComposicaoTime()){
+                    // Verificando se o integrante já está no mapa
+                    if (funcaoContagem.containsKey(composicaoTime.getIntegrante().getFuncao())) {
+                        // Se estiver, incrementa a contagem
+                        funcaoContagem.put(composicaoTime.getIntegrante().getFuncao(), funcaoContagem.get(composicaoTime.getIntegrante().getFuncao()) + 1);
+                    } else {
+                        // Se não estiver, adiciona ao mapa com contagem 1
+                        funcaoContagem.put(composicaoTime.getIntegrante().getFuncao(), 1);
+                    }
+                }
+            }
+        }
+
+        // Encontrando o integrante com a maior contagem
+        String funcaoMaisComum = "";
+        int maiorContagem = 0;
+        
+        // Percorrento as posições do map funcaoContagem
+        for (Map.Entry<String, Integer> entry : funcaoContagem.entrySet()) {
+            // Se o valor do elemento atual for a maior contagem, atualiza o valor e a chave
+            if (entry.getValue() > maiorContagem) {
+                // Atribui o valor da contagem para comparar na próxima iteração
+                maiorContagem = entry.getValue();
+                // Atribui o valor da chave para pegar o nome do Integrante
+                funcaoMaisComum = entry.getKey();
+            }
+        }
+
+        // Retorna o valor atribuido pela chave que mais apareceu com maior contagem
+        return funcaoMaisComum;
     }
 
     /**
      * @param dataInicial pode ser nulo
      * @param dataFinal pode ser nulo
-     * @return Vai retornar o nome da Franquia mais comum nos times dentro do período
+     * @return Vai retornar o número (quantidade) de Franquias dentro do período
      */
     public String franquiaMaisFamosa(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
-        // TODO Implementar método seguindo as instruções!
+
         return null;
     }
-
-
     /**
      * @param dataInicial pode ser nulo
      * @param dataFinal pode ser nulo

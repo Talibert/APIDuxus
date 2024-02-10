@@ -128,4 +128,48 @@ public class TimeController {
             return new ResponseEntity<>(integranteMaisUsado, HttpStatus.OK);
     }
 
+    @GetMapping("/timemaiscomum")
+    public ResponseEntity<Map<String, Object>> timeMaiscomum(
+                    // Pegando a data dos parâmetros da requisição
+                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal)
+        
+        {
+
+            // Coloca todos os times em uma lista de Time
+            List<Time> times = timeRepository.findAll();
+            // Chama o método timeDaData e passa data e a lista de times como argumento
+            List<String> integrantes = apiService.timeMaisComum(dataInicial, dataFinal, times);
+            // Criando um Map que irá receber o integrante mais usado
+            Map<String, Object> integranteMaisUsado = new HashMap<>();
+
+            // Passando a key "integrante mais usado" e pegando o nome do integrante
+            //integranteMaisUsado.put("Integrante Mais Usado", integrante.getNome());
+
+            //Retorno da resposta
+            return new ResponseEntity<>(integranteMaisUsado, HttpStatus.OK);
+    }
+
+    @GetMapping("/funcaomaiscomum")
+    public ResponseEntity<Map<String, Object>> funcaoMaisComum(
+                    // Pegando a data dos parâmetros da requisição
+                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal)
+        
+        {
+
+            // Coloca todos os times em uma lista de Time
+            List<Time> times = timeRepository.findAll();
+            // Chama o método timeDaData e passa data e a lista de times como argumento
+            String funcao = apiService.funcaoMaisComum(dataInicial, dataFinal, times);
+            // Criando um Map que irá receber o integrante mais usado
+            Map<String, Object> funcaoMaisComum = new HashMap<>();
+
+            // Passando a key "integrante mais usado" e pegando o nome do integrante
+            funcaoMaisComum.put("Função mais comum:", funcao);
+
+            //Retorno da resposta
+            return new ResponseEntity<>(funcaoMaisComum, HttpStatus.OK);
+    }
+
 }
