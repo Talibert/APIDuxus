@@ -1,10 +1,13 @@
 package br.com.duxusdesafio.service;
 
+import br.com.duxusdesafio.model.ComposicaoTime;
 import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +23,29 @@ public class ApiService {
     /**
      * @return Vai retornar o time da data
      */
-    public Time timeDaData(LocalDate data, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+    public Map<String, Object> timeDaData(LocalDate data, List<Time> todosOsTimes){
+        
+        // Definindo um novo Array
+        List<String> timeDaData = new ArrayList<>();
+        String timeNome = "";
+
+        // Iterando em cada time
+        for (Time time : todosOsTimes) {
+            // Logica para ver se a data do time é igual a data definida pelo usuario
+            if (time.getData().equals(data)) {
+                // Iterando a composição
+                    timeNome = time.getNome();
+                for (ComposicaoTime composicaoTime : time.getComposicaoTime()) {
+                    timeDaData.add(composicaoTime.getIntegrante().getNome());
+                    
+                }
+            }
+        }
+
+        Map<String, Object> resultado = new HashMap<>();
+        resultado.put("timeNome", timeNome);
+        resultado.put("timeDaData", timeDaData);
+        return resultado;
     }
 
     /**

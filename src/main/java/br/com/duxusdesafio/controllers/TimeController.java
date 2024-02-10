@@ -1,13 +1,19 @@
 package br.com.duxusdesafio.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Optional;
+
+import java.time.LocalDate;
+import java.util.Map;
+import java.util.List;
 
 import br.com.duxusdesafio.dtos.TimeDto;
 import br.com.duxusdesafio.model.ComposicaoTime;
@@ -15,6 +21,7 @@ import br.com.duxusdesafio.model.Time;
 import br.com.duxusdesafio.repositories.ComposicaoTimeRepository;
 import br.com.duxusdesafio.repositories.IntegranteRepository;
 import br.com.duxusdesafio.repositories.TimeRepository;
+import br.com.duxusdesafio.service.ApiService;
 
 @RestController
 @RequestMapping("/duxus/time")
@@ -26,6 +33,8 @@ public class TimeController {
     private IntegranteRepository integranteRepository;
     @Autowired
     private ComposicaoTimeRepository composicaoTimeRepository;
+    @Autowired
+    private ApiService apiService;
     
     @GetMapping("/helloworld")
     public String teste() {
@@ -44,6 +53,7 @@ public class TimeController {
         // Salvando o time na tabela de times
         timeRepository.save(time);
 
+        // Cadastra o time se receber o ID do integrante
         if (dto.getIntegrantesID() != null && !dto.getIntegrantesID().isEmpty()) {
             for (Long integranteId: dto.getIntegrantesID()) {
                 ComposicaoTime composicaoTime = new ComposicaoTime();
@@ -55,6 +65,7 @@ public class TimeController {
                 });
 
             }
+        // Cadastra o time se receber o nome do integrante
         } else {
             for (String integranteNome: dto.getIntegrantesNome()) {
                 ComposicaoTime composicaoTime = new ComposicaoTime();
@@ -68,14 +79,30 @@ public class TimeController {
             }
         }
 
-        Optional<Time> timeOptional = timeRepository.findById(time.getId());
-        if (timeOptional.isPresent()) {
-                Time timeWithComposition = timeOptional.get();
-                return ResponseEntity.ok(timeWithComposition);
-        } else {
-                return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(time);
         
+    }
+
+    @GetMapping("/timenadata")
+    public ResponseEntity<Map<String, Object>> getTimeNaData(
+        
+        // Pegando a data dos parâmetros da requisição
+        @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+
+            // Coloca todos os times em uma lista de Time
+            List<Time> times = timeRepository.findAll();
+            // Chama o método timeDaData e passa data e a lista de times como argumento
+            Map<String, Object> timeNaData = apiService.timeDaData(data, times);
+            
+            //Passa a key data, com o argumento data
+            timeNaData.put("data", data);
+            //Passa a key timeNome, com o timeNome retornado
+            timeNaData.put("timeNome", timeNaData.get("timeNome"));
+            //Passa a key timeDaData com o timeDaData retornado
+            timeNaData.put("timeDaData", timeNaData.get("timeDaData"));
+            
+    
+            return new ResponseEntity<>(timeNaData, HttpStatus.OK);
     }
 
 }
