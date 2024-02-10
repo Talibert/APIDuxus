@@ -22,6 +22,10 @@ public class Time {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	// Parâmetro adicional para dar nome ao time
+	@Column
+	private String nome;
+
 	@Column
     private LocalDate data;
 	

@@ -1,16 +1,15 @@
 package br.com.duxusdesafio.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/duxus/time")
-public class TimeController {
-    
-    @PostMapping("/helloworld")
-    public String teste() {
-        return "hello world";
-    }
+import br.com.duxusdesafio.model.Integrante;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
+@RestController
+@RequestMapping("/duxus/integrante")
+public class IntegranteController {
+    
 }
