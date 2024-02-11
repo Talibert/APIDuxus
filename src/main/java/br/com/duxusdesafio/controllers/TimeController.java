@@ -56,8 +56,7 @@ public class TimeController {
         timeRepository.save(time);
 
         // Cadastra o time se receber o ID do integrante
-        if (dto.getIntegrantesID() != null && !dto.getIntegrantesID().isEmpty()) {
-            for (Long integranteId: dto.getIntegrantesID()) {
+        for (Long integranteId: dto.getIntegrantesID()) {
                 ComposicaoTime composicaoTime = new ComposicaoTime();
                 composicaoTime.setTime(time);
                 integranteRepository.findById(integranteId).ifPresent(integrante -> {
@@ -65,24 +64,8 @@ public class TimeController {
 
                 composicaoTimeRepository.save(composicaoTime);   
                 });
-
-            }
-        // Cadastra o time se receber o nome do integrante
-        } else {
-            for (String integranteNome: dto.getIntegrantesNome()) {
-                ComposicaoTime composicaoTime = new ComposicaoTime();
-                composicaoTime.setTime(time);
-                integranteRepository.findByNome(integranteNome).ifPresent(integrante -> {
-                    composicaoTime.setIntegrante(integrante);
-
-                composicaoTimeRepository.save(composicaoTime);   
-                });
-
-            }
         }
-
         return ResponseEntity.ok(time);
-        
     }
 
     @GetMapping("/timenadata")
