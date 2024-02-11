@@ -38,9 +38,23 @@ public class TimeController {
     @Autowired
     private ApiService apiService;
     
-    @GetMapping("/helloworld")
-    public String teste() {
-        return "hello world";
+    @GetMapping("/cadastro")
+    public ResponseEntity<Map<Long, Map<String, Object>>> obterIntegrantes() {
+        List<Integrante> todosOsIntegrantes = integranteRepository.findAll();
+        // Criando um Map para armazenar o ID e a chave/valor de outro Map
+        Map<Long, Map<String,Object>> integrantesMap = new HashMap<>();
+        
+        // Adicionar os integrantes ao Map aninhado
+        for (Integrante integrante : todosOsIntegrantes) {
+            Map<String, Object> integranteData = new HashMap<>();
+            integranteData.put("funcao", integrante.getFuncao());
+            integranteData.put("nome", integrante.getNome());
+
+            //Adicionando o ID e a chave/valor do Map aninhado
+            integrantesMap.put(integrante.getId(), integranteData);
+        }
+    
+        return new ResponseEntity<>(integrantesMap, HttpStatus.OK);
     }
 
     @SuppressWarnings("null")
