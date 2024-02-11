@@ -159,6 +159,7 @@ public class ApiService {
      * @return Vai retornar a função mais comum nos times dentro do período
      */
     public String funcaoMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
+
         Map<String, Integer> funcaoContagem = new HashMap<>();
 
         // Iterando por todos os times
@@ -167,7 +168,7 @@ public class ApiService {
             if(!time.getData().isBefore(dataInicial) && !time.getData().isAfter(dataFinal)) {
                 // Iterando as composições para pegar os integrantes
                 for (ComposicaoTime composicaoTime : time.getComposicaoTime()){
-                    // Verificando se o integrante já está no mapa
+                    // Verificando se a função já está no mapa
                     if (funcaoContagem.containsKey(composicaoTime.getIntegrante().getFuncao())) {
                         // Se estiver, incrementa a contagem
                         funcaoContagem.put(composicaoTime.getIntegrante().getFuncao(), funcaoContagem.get(composicaoTime.getIntegrante().getFuncao()) + 1);
@@ -179,23 +180,24 @@ public class ApiService {
             }
         }
 
-        // Encontrando o integrante com a maior contagem
+        // Encontrando a função com a maior contagem
         String funcaoMaisComum = "";
         int maiorContagem = 0;
         
-        // Percorrento as posições do map funcaoContagem
+        // Percorrendo as posições do map funcaoContagem
         for (Map.Entry<String, Integer> entry : funcaoContagem.entrySet()) {
             // Se o valor do elemento atual for a maior contagem, atualiza o valor e a chave
             if (entry.getValue() > maiorContagem) {
                 // Atribui o valor da contagem para comparar na próxima iteração
                 maiorContagem = entry.getValue();
-                // Atribui o valor da chave para pegar o nome do Integrante
+                // Atribui o valor da chave para pegar o nome da Função
                 funcaoMaisComum = entry.getKey();
             }
         }
 
         // Retorna o valor atribuido pela chave que mais apareceu com maior contagem
         return funcaoMaisComum;
+
     }
 
     /**
@@ -205,7 +207,44 @@ public class ApiService {
      */
     public String franquiaMaisFamosa(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
 
-        return null;
+        Map<String, Integer> franquiaContagem = new HashMap<>();
+
+        // Iterando por todos os times
+        for (Time time : todosOsTimes) {
+            // Verificando se a data do time está dentro da data fornecida
+            if(!time.getData().isBefore(dataInicial) && !time.getData().isAfter(dataFinal)) {
+                // Iterando as composições para pegar os integrantes
+                for (ComposicaoTime composicaoTime : time.getComposicaoTime()){
+                    // Verificando se a franquia já está no mapa
+                    if (franquiaContagem.containsKey(composicaoTime.getIntegrante().getFranquia())) {
+                        // Se estiver, incrementa a contagem
+                        franquiaContagem.put(composicaoTime.getIntegrante().getFranquia(), franquiaContagem.get(composicaoTime.getIntegrante().getFranquia()) + 1);
+                    } else {
+                        // Se não estiver, adiciona ao mapa com contagem 1
+                        franquiaContagem.put(composicaoTime.getIntegrante().getFranquia(), 1);
+                    }
+                }
+            }
+        }
+
+        // Encontrando a franquia com a maior contagem
+        String franquiaMaisFamosa = "";
+        int maiorContagem = 0;
+        
+        // Percorrendo as posições do map franquiaContagem
+        for (Map.Entry<String, Integer> entry : franquiaContagem.entrySet()) {
+            // Se o valor do elemento atual for a maior contagem, atualiza o valor e a chave
+            if (entry.getValue() > maiorContagem) {
+                // Atribui o valor da contagem para comparar na próxima iteração
+                maiorContagem = entry.getValue();
+                // Atribui o valor da chave para pegar o nome da Função
+                franquiaMaisFamosa = entry.getKey();
+            }
+        }
+
+        // Retorna o valor atribuido pela chave que mais apareceu com maior contagem
+        return franquiaMaisFamosa;
+
     }
     /**
      * @param dataInicial pode ser nulo

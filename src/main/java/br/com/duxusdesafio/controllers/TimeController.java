@@ -172,4 +172,26 @@ public class TimeController {
             return new ResponseEntity<>(funcaoMaisComum, HttpStatus.OK);
     }
 
+    @GetMapping("/franquiamaisfamosa")
+    public ResponseEntity<Map<String, Object>> franquiaMaisFamosa(
+                    // Pegando a data dos parâmetros da requisição
+                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal)
+        
+        {
+
+            // Coloca todos os times em uma lista de Time
+            List<Time> times = timeRepository.findAll();
+            // Chama o método timeDaData e passa data e a lista de times como argumento
+            String franquia = apiService.franquiaMaisFamosa(dataInicial, dataFinal, times);
+            // Criando um Map que irá receber o integrante mais usado
+            Map<String, Object> franquiaMaisFamosa = new HashMap<>();
+
+            // Passando a key "integrante mais usado" e pegando o nome do integrante
+            franquiaMaisFamosa.put("Franquia mais famosa:", franquia);
+
+            //Retorno da resposta
+            return new ResponseEntity<>(franquiaMaisFamosa, HttpStatus.OK);
+    }
+
 }
