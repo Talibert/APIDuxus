@@ -211,4 +211,21 @@ public class TimeController {
             return new ResponseEntity<>(franquia, HttpStatus.OK);
     }
 
+    @GetMapping("/contagemfuncao")
+    public ResponseEntity<Map<String, Long>> contagemPorFuncao(
+                    // Pegando a data dos parâmetros da requisição
+                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal)
+        
+        {
+
+            // Coloca todos os times em uma lista de Time
+            List<Time> times = timeRepository.findAll();
+            // Chama o método timeDaData e passa data e a lista de times como argumento
+            Map<String, Long> franquia = apiService.contagemPorFuncao(dataInicial, dataFinal, times);
+
+            //Retorno da resposta
+            return new ResponseEntity<>(franquia, HttpStatus.OK);
+    }
+
 }

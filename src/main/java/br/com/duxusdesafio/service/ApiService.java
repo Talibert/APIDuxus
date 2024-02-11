@@ -283,8 +283,30 @@ public class ApiService {
      * @Return Vai retornar o número (quantidade) de Funções dentro do período
      */
     public Map<String, Long> contagemPorFuncao(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+        
+        Map<String, Long> funcaoContagem = new HashMap<>();
+
+        // Iterando por todos os times
+        for (Time time : todosOsTimes) {
+            // Verificando se a data do time está dentro da data fornecida
+            if(!time.getData().isBefore(dataInicial) && !time.getData().isAfter(dataFinal)) {
+                // Iterando as composições para pegar os integrantes
+                for (ComposicaoTime composicaoTime : time.getComposicaoTime()){
+                    // Verificando se a franquia já está no mapa
+                    if (funcaoContagem.containsKey(composicaoTime.getIntegrante().getFuncao())) {
+                        // Se estiver, incrementa a contagem
+                        funcaoContagem.put(composicaoTime.getIntegrante().getFuncao(), funcaoContagem.get(composicaoTime.getIntegrante().getFuncao()) + 1);
+                    } else {
+                        // Se não estiver, adiciona ao mapa com contagem 1
+                        funcaoContagem.put(composicaoTime.getIntegrante().getFuncao(), 1L);
+                    }
+                }
+            }
+        }
+
+
+        return funcaoContagem;
+
     }
 
 }
