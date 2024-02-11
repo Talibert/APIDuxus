@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Comparator;
 
 /**
  * Service que possuirá as regras de negócio para o processamento dos dados
@@ -106,7 +107,7 @@ public class ApiService {
     public List<String> timeMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
 
         // Criando um Map para armazenar a contagem de cada integrante
-        Map<Integrante, Integer> timeContagem = new HashMap<>();
+        Map<String, Integer> timeContagem = new HashMap<>();
         
         // Iterando por todos os times
         for (Time time : todosOsTimes) {
@@ -115,16 +116,41 @@ public class ApiService {
                 // Iterando as composições para pegar os integrantes
                 for (ComposicaoTime composicaoTime : time.getComposicaoTime()){
                     // Verificando se o integrante já está no mapa
-                    if (timeContagem.containsKey(composicaoTime.getIntegrante())) {
+                    if (timeContagem.containsKey(composicaoTime.getIntegrante().getNome())) {
                         // Se estiver, incrementa a contagem
-                        timeContagem.put(composicaoTime.getIntegrante(), timeContagem.get(composicaoTime.getIntegrante()) + 1);
+                        timeContagem.put(composicaoTime.getIntegrante().getNome(), timeContagem.get(composicaoTime.getIntegrante().getNome()) + 1);
                     } else {
                         // Se não estiver, adiciona ao mapa com contagem 1
-                        timeContagem.put(composicaoTime.getIntegrante(), 1);
+                        timeContagem.put(composicaoTime.getIntegrante().getNome(), 1);
                     }
                 }
             }
         }
+
+        // Convertendo o mapa para uma lista de entradas
+        List<Map.Entry<String, Integer>> timeContagemConvertido = new ArrayList<>(timeContagem.entrySet());
+
+        // Ordenando a lista com base nos valores em ordem decrescente
+        timeContagemConvertido.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+        // Lista que irá receber os nomes do timeMaisComum
+        List<String> timeMaisComum = new ArrayList<>();
+
+        // Adicionando os nomes dos integrantes dos cinco maiores pares chave-valor à lista
+        int count = 0;
+        for (Map.Entry<String, Integer> integrante : timeContagemConvertido) {
+            // Verifica o time está completo e para o loop
+            if (count >= 5) {
+                break;
+            }
+            // Adiciona o nome do integrante ao time
+            timeMaisComum.add(integrante.getKey());
+            count++;
+        }
+
+        // Retornando a lista com os nomes dos integrantes dos cinco maiores pares chave-valor
+        return timeMaisComum;
+
 
         // List<ComposicaoTime> timeMaisComum = new ArrayList<>();
         // int maiorContagem = 0;
@@ -141,7 +167,7 @@ public class ApiService {
         // }
 
         // Construindo a lista de Strings com os nomes dos integrantes da composição de time mais comum
-        List<String> integrantesMaisUsados = new ArrayList<>();
+        // List<String> integrantesMaisUsados = new ArrayList<>();
         // String nomeIntegrante = "";
         //     if (timeMaisComum != null) {
         //         for (ComposicaoTime composicaoTime : timeMaisComum) {
@@ -149,8 +175,8 @@ public class ApiService {
         //             integrantesMaisUsados.add(nomeIntegrante);
         //         }
         //     }
-            System.out.println(timeContagem);
-            return integrantesMaisUsados;
+            // System.out.println(timeContagem);
+            // return integrantesMaisUsados;
         }
 
     /**

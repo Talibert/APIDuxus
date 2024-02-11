@@ -124,13 +124,13 @@ public class TimeController {
             // Chama o método timeDaData e passa data e a lista de times como argumento
             List<String> integrantes = apiService.timeMaisComum(dataInicial, dataFinal, times);
             // Criando um Map que irá receber o integrante mais usado
-            Map<String, Object> integranteMaisUsado = new HashMap<>();
+            Map<String, Object> timeMaisComum = new HashMap<>();
 
             // Passando a key "integrante mais usado" e pegando o nome do integrante
-            //integranteMaisUsado.put("Integrante Mais Usado", integrante.getNome());
+            timeMaisComum.put("Time mais comum:", integrantes);
 
             //Retorno da resposta
-            return new ResponseEntity<>(integranteMaisUsado, HttpStatus.OK);
+            return new ResponseEntity<>(timeMaisComum, HttpStatus.OK);
     }
 
     @GetMapping("/funcaomaiscomum")
