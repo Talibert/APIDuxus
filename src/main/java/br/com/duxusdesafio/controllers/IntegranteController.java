@@ -22,7 +22,13 @@ public class IntegranteController {
     private IntegranteRepository integranteRepository;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<Integrante> cadastrarIntegrante(@RequestBody IntegranteDto dto ) {
+    public ResponseEntity<?> cadastrarIntegrante(@RequestBody IntegranteDto dto ) {
+        // Verifica se o atributo 'nome' é nulo
+        if (dto.getNome() == null || dto.getNome().isEmpty()) {
+            // Retorna uma resposta de erro indicando que o nome é obrigatório
+            return ResponseEntity.badRequest().body("O atributo 'nome' é obrigatório.");
+        }
+        
         // Instanciando um novo integrante
         Integrante integrante = new Integrante();
         // Atribuindo ao integrante os dados recebidos pelo dto
