@@ -40,6 +40,7 @@ public class TimeController {
     
     @GetMapping("/cadastro")
     public ResponseEntity<Map<Long, Map<String, Object>>> obterIntegrantes() {
+
         List<Integrante> todosOsIntegrantes = integranteRepository.findAll();
         // Criando um Map para armazenar o ID e a chave/valor de outro Map
         Map<Long, Map<String,Object>> integrantesMap = new HashMap<>();
@@ -59,7 +60,13 @@ public class TimeController {
 
     @SuppressWarnings("null")
     @PostMapping("/cadastro")
-    public ResponseEntity<Time> cadastrarTime(@RequestBody TimeDto dto) {
+    public ResponseEntity<?> cadastrarTime(@RequestBody TimeDto dto) {
+        // Verifica se o atributo 'nome' é nulo
+        if (dto.getNome() == null || dto.getNome().isEmpty()) {
+            // Retorna uma resposta de erro indicando que o nome é obrigatório
+            return ResponseEntity.badRequest().body("O atributo 'nome' é obrigatório.");
+        }
+        
         // Criando um novo time
         Time time = new Time ();
         // Recuperando dados do dto
@@ -94,10 +101,6 @@ public class TimeController {
             
             //Passa a key data, com o argumento data
             timeNaData.put("data", data);
-            //Passa a key timeNome, com o timeNome retornado
-            timeNaData.put("timeNome", timeNaData.get("timeNome"));
-            //Passa a key timeDaData com o timeDaData retornado
-            timeNaData.put("timeDaData", timeNaData.get("timeDaData"));
             
             //Retorno da resposta
             return new ResponseEntity<>(timeNaData, HttpStatus.OK);

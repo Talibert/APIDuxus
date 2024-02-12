@@ -24,29 +24,41 @@ public class ApiService {
     /**
      * @return Vai retornar o time da data
      */
-    public Map<String, Object> timeDaData(LocalDate data, List<Time> todosOsTimes){
-        
-        // Definindo um novo Array
-        List<String> timeDaData = new ArrayList<>();
-        String timeNome = "";
+    public Map<String, Object> timeDaData(LocalDate data, List<Time> todosOsTimes) {
+        // Criando uma lista de times
+        List<Time> timesDaData = new ArrayList<>();
 
         // Iterando por todos os times
         for (Time time : todosOsTimes) {
-            // Verificando se data do time é igual a data fornecida
+            // Verificando se a data do time é igual à data fornecida
             if (time.getData().equals(data)) {
-                // Pegando o nome do time
-                timeNome = time.getNome();
-                // Iterando a composição e adicionando ao time
-                for (ComposicaoTime composicaoTime : time.getComposicaoTime()) {
-                    timeDaData.add(composicaoTime.getIntegrante().getNome());
-                    
-                }
+                // adicionando o time em uma lista de times
+                timesDaData.add(time);
             }
         }
 
+        // Iniciando o nome do time e a lista com os integrantes do ultimo time cadastrado
+        String timeNome = "";
+        List<String> integrantes = new ArrayList<>();
+
+        // Verifica se há algum time na data
+        if (!timesDaData.isEmpty()) {
+            // Obtém o último time da lista
+            Time ultimoTime = timesDaData.get(timesDaData.size() - 1);
+            // Pegando o nome dos integrantes
+            timeNome = ultimoTime.getNome();
+            
+            // Iterando sobre a composição do último time
+            for (ComposicaoTime composicaoTime : ultimoTime.getComposicaoTime()) {
+                integrantes.add(composicaoTime.getIntegrante().getNome());
+            }
+        }
+
+        // Criando o mapa de resultados
         Map<String, Object> resultado = new HashMap<>();
         resultado.put("timeNome", timeNome);
-        resultado.put("timeDaData", timeDaData);
+        resultado.put("integrantes", integrantes);
+
         return resultado;
     }
 
