@@ -162,33 +162,6 @@ public class ApiService {
 
         // Retornando a lista com os nomes dos integrantes dos cinco maiores pares chave-valor
         return timeMaisComum;
-
-
-        // List<ComposicaoTime> timeMaisComum = new ArrayList<>();
-        // int maiorContagem = 0;
-
-        // // Percorrento as posições do map integranteContagem
-        // for (Map.Entry<ComposicaoTime, Integer> entry : timeContagem.entrySet()) {
-        //     // Se o valor do elemento atual for a maior contagem, atualiza o valor e a chave
-        //     if (entry.getValue() > maiorContagem) {
-        //         // Atribui o valor da contagem para comparar na próxima iteração
-        //         maiorContagem = entry.getValue();
-        //         // Atribui o valor da chave para pegar o nome do Integrante
-        //         timeMaisComum.add(entry.getKey());
-        //     }
-        // }
-
-        // Construindo a lista de Strings com os nomes dos integrantes da composição de time mais comum
-        // List<String> integrantesMaisUsados = new ArrayList<>();
-        // String nomeIntegrante = "";
-        //     if (timeMaisComum != null) {
-        //         for (ComposicaoTime composicaoTime : timeMaisComum) {
-        //             nomeIntegrante = composicaoTime.getIntegrante().getNome();
-        //             integrantesMaisUsados.add(nomeIntegrante);
-        //         }
-        //     }
-            // System.out.println(timeContagem);
-            // return integrantesMaisUsados;
         }
 
     /**
