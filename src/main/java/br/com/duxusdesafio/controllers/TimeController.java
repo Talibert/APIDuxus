@@ -107,33 +107,7 @@ public class TimeController {
             return new ResponseEntity<>(timeNaData, HttpStatus.OK);
     }
 
-    @GetMapping("/integrantemaisusado")
-    public ResponseEntity<Map<String, Object>> integranteMaisUsado(
-                    // Pegando a data dos parâmetros da requisição
-                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
-                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
-        
-        {
 
-            // Verifica se a primeira data é nula
-            LocalDate dataInicialReal = dataInicial.orElse(LocalDate.MIN);
-
-            // Verifica se a segunda data é nula
-            LocalDate dataFinalReal = dataFinal.orElse(LocalDate.MAX);      
-
-            // Coloca todos os times em uma lista de Time
-            List<Time> times = timeRepository.findAll();
-            // Chama o método timeDaData e passa data e a lista de times como argumento
-            Integrante integrante = apiService.integranteMaisUsado(dataInicialReal, dataFinalReal, times);
-            // Criando um Map que irá receber o integrante mais usado
-            Map<String, Object> integranteMaisUsado = new HashMap<>();
-
-            // Passando a key "integrante mais usado" e pegando o nome do integrante
-            integranteMaisUsado.put("Integrante Mais Usado", integrante.getNome());
-
-            //Retorno da resposta
-            return new ResponseEntity<>(integranteMaisUsado, HttpStatus.OK);
-    }
 
     @GetMapping("/timemaiscomum")
     public ResponseEntity<Map<String, Object>> timeMaiscomum(
