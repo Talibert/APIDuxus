@@ -120,8 +120,8 @@ public class TimeController {
     @GetMapping("/timemaiscomum")
     public ResponseEntity<Map<String, Object>> timeMaiscomum(
                     // Pegando a data dos parâmetros da requisição
-                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
-                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
+                    @RequestParam("dataInicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
+                    @RequestParam("dataFinal") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
         
         {
 
@@ -148,8 +148,8 @@ public class TimeController {
     @GetMapping("/funcaomaiscomum")
     public ResponseEntity<Map<String, Object>> funcaoMaisComum(
                     // Pegando a data dos parâmetros da requisição
-                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
-                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
+                    @RequestParam("dataInicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
+                    @RequestParam("dataFinal") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
         
         {
 
@@ -176,8 +176,8 @@ public class TimeController {
     @GetMapping("/franquiamaisfamosa")
     public ResponseEntity<Map<String, Object>> franquiaMaisFamosa(
                     // Pegando a data dos parâmetros da requisição
-                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
-                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
+                    @RequestParam("dataInicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
+                    @RequestParam("dataFinal") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
         
         {
 
@@ -204,8 +204,8 @@ public class TimeController {
     @GetMapping("/contagemfranquia")
     public ResponseEntity<Map<String, Long>> contagemPorFranquia(
                     // Pegando a data dos parâmetros da requisição
-                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
-                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
+                    @RequestParam("dataInicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
+                    @RequestParam("dataFinal") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
         
         {
 
@@ -227,8 +227,8 @@ public class TimeController {
     @GetMapping("/contagemfuncao")
     public ResponseEntity<Map<String, Long>> contagemPorFuncao(
                     // Pegando a data dos parâmetros da requisição
-                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
-                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
+                    @RequestParam("dataInicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
+                    @RequestParam("dataFinal") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
         
         {
 
