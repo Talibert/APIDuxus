@@ -68,6 +68,14 @@ public class TimeController {
             return ResponseEntity.badRequest().body("O atributo 'nome' é obrigatório.");
         }
         
+        List<Time> times = timeRepository.findAll();
+
+        for (Time time : times) {
+            if(dto.getNome().equalsIgnoreCase(time.getNome())){
+                return ResponseEntity.badRequest().body("O nome já está em uso.");
+            }
+        }
+
         // Criando um novo time
         Time time = new Time ();
         // Recuperando dados do dto
