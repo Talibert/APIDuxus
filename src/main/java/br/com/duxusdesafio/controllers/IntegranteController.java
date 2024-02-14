@@ -64,8 +64,8 @@ public class IntegranteController {
         @GetMapping("/integrantemaisusado")
     public ResponseEntity<Map<String, Object>> integranteMaisUsado(
                     // Pegando a data dos parâmetros da requisição
-                    @RequestParam("data inicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
-                    @RequestParam("data final") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
+                    @RequestParam("dataInicial") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataInicial,
+                    @RequestParam("dataFinal") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> dataFinal)
         
         {
 
