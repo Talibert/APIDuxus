@@ -45,6 +45,14 @@ public class IntegranteController {
             // Retorna uma resposta de erro indicando que o nome é obrigatório
             return ResponseEntity.badRequest().body("O atributo 'nome' é obrigatório.");
         }
+
+        List<Integrante> Integrantes = integranteRepository.findAll();
+
+        for (Integrante integrante : Integrantes) {
+            if(dto.getNome().equalsIgnoreCase(integrante.getNome())){
+                return ResponseEntity.badRequest().body("O nome já está em uso.");
+            }
+        }
         
         // Instanciando um novo integrante
         Integrante integrante = new Integrante();
