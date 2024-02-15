@@ -51,6 +51,7 @@ public class TimeController {
             Map<String, Object> integranteData = new HashMap<>();
             integranteData.put("funcao", integrante.getFuncao());
             integranteData.put("nome", integrante.getNome());
+            integranteData.put("franquia", integrante.getFranquia());
 
             //Adicionando o ID e a chave/valor do Map aninhado
             integrantesMap.put(integrante.getId(), integranteData);
