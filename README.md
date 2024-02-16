@@ -1,3 +1,7 @@
+# Informações sobre meu projeto
+
+Utilizei o postgresql como banco de dados e as informações para conexão estão no arquivo application.properties. O aplicativo desenvolvido para se comunicar com a API foi feito com REACT e está utilizando a porta 3000. A API está rodando na porta 8080.
+
 
 # Desafio de Desenvolvimento
 
