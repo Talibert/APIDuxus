@@ -40,32 +40,32 @@ public class IntegranteController {
 
     @PostMapping("/cadastro")
     public ResponseEntity<?> cadastrarIntegrante(@RequestBody IntegranteDto dto ) {
-        // Verifica se o atributo 'nome' é nulo
-        if (dto.getNome() == null || dto.getNome().isEmpty()) {
-            // Retorna uma resposta de erro indicando que o nome é obrigatório
-            return ResponseEntity.badRequest().body("O atributo 'nome' é obrigatório.");
-        }
-
-        List<Integrante> Integrantes = integranteRepository.findAll();
-
-        for (Integrante integrante : Integrantes) {
-            if(dto.getNome().equalsIgnoreCase(integrante.getNome())){
-                return ResponseEntity.badRequest().body("O nome já está em uso.");
+            // Verifica se o atributo 'nome' é nulo
+            if (dto.getNome() == null || dto.getNome().isEmpty()) {
+                // Retorna uma resposta de erro indicando que o nome é obrigatório
+                return ResponseEntity.badRequest().body("O atributo 'nome' é obrigatório.");
             }
-        }
-        
-        // Instanciando um novo integrante
-        Integrante integrante = new Integrante();
-        // Atribuindo ao integrante os dados recebidos pelo dto
-        integrante.setNome(dto.getNome());
-        integrante.setFranquia(dto.getFranquia());
-        integrante.setFuncao(dto.getFuncao());
 
-        // Salvado o integrante no banco de dados
-        integranteRepository.save(integrante);
+            List<Integrante> Integrantes = integranteRepository.findAll();
 
-        // Retorno do JSON
-        return ResponseEntity.ok(integrante);
+            for (Integrante integrante : Integrantes) {
+                if(dto.getNome().equalsIgnoreCase(integrante.getNome())){
+                    return ResponseEntity.badRequest().body("O nome já está em uso.");
+                }
+            }
+            
+            // Instanciando um novo integrante
+            Integrante integrante = new Integrante();
+            // Atribuindo ao integrante os dados recebidos pelo dto
+            integrante.setNome(dto.getNome());
+            integrante.setFranquia(dto.getFranquia());
+            integrante.setFuncao(dto.getFuncao());
+
+            // Salvado o integrante no banco de dados
+            integranteRepository.save(integrante);
+
+            // Retorno do JSON
+            return ResponseEntity.ok(integrante);
 
     }
 

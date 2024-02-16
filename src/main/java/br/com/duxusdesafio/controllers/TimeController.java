@@ -42,61 +42,61 @@ public class TimeController {
     @GetMapping("/cadastro")
     public ResponseEntity<Map<Long, Map<String, Object>>> obterIntegrantes() {
 
-        List<Integrante> todosOsIntegrantes = integranteRepository.findAll();
-        // Criando um Map para armazenar o ID e a chave/valor de outro Map
-        Map<Long, Map<String,Object>> integrantesMap = new HashMap<>();
-        
-        // Adicionar os integrantes ao Map aninhado
-        for (Integrante integrante : todosOsIntegrantes) {
-            Map<String, Object> integranteData = new HashMap<>();
-            integranteData.put("funcao", integrante.getFuncao());
-            integranteData.put("nome", integrante.getNome());
-            integranteData.put("franquia", integrante.getFranquia());
+            List<Integrante> todosOsIntegrantes = integranteRepository.findAll();
+            // Criando um Map para armazenar o ID e a chave/valor de outro Map
+            Map<Long, Map<String,Object>> integrantesMap = new HashMap<>();
+            
+            // Adicionar os integrantes ao Map aninhado
+            for (Integrante integrante : todosOsIntegrantes) {
+                Map<String, Object> integranteData = new HashMap<>();
+                integranteData.put("funcao", integrante.getFuncao());
+                integranteData.put("nome", integrante.getNome());
+                integranteData.put("franquia", integrante.getFranquia());
 
-            //Adicionando o ID e a chave/valor do Map aninhado
-            integrantesMap.put(integrante.getId(), integranteData);
-        }
-    
-        return new ResponseEntity<>(integrantesMap, HttpStatus.OK);
+                //Adicionando o ID e a chave/valor do Map aninhado
+                integrantesMap.put(integrante.getId(), integranteData);
+            }
+        
+            return new ResponseEntity<>(integrantesMap, HttpStatus.OK);
     }
 
     @SuppressWarnings("null")
     @PostMapping("/cadastro")
     public ResponseEntity<?> cadastrarTime(@RequestBody TimeDto dto) {
-        // Verifica se o atributo 'nome' é nulo
-        if (dto.getNome() == null || dto.getNome().isEmpty()) {
-            // Retorna uma resposta de erro indicando que o nome é obrigatório
-            return ResponseEntity.badRequest().body("O atributo 'nome' é obrigatório.");
-        }
-        
-        List<Time> times = timeRepository.findAll();
-
-        for (Time time : times) {
-            if(dto.getNome().equalsIgnoreCase(time.getNome())){
-                return ResponseEntity.badRequest().body("O nome já está em uso.");
+            // Verifica se o atributo 'nome' é nulo
+            if (dto.getNome() == null || dto.getNome().isEmpty()) {
+                // Retorna uma resposta de erro indicando que o nome é obrigatório
+                return ResponseEntity.badRequest().body("O atributo 'nome' é obrigatório.");
             }
-        }
+            
+            List<Time> times = timeRepository.findAll();
 
-        // Criando um novo time
-        Time time = new Time ();
-        // Recuperando dados do dto
-        time.setData(dto.getData());
-        time.setNome(dto.getNome());
+            for (Time time : times) {
+                if(dto.getNome().equalsIgnoreCase(time.getNome())){
+                    return ResponseEntity.badRequest().body("O nome já está em uso.");
+                }
+            }
 
-        // Salvando o time na tabela de times
-        timeRepository.save(time);
+            // Criando um novo time
+            Time time = new Time ();
+            // Recuperando dados do dto
+            time.setData(dto.getData());
+            time.setNome(dto.getNome());
 
-        // Cadastra o time se receber o ID do integrante
-        for (Long integranteId: dto.getIntegrantesID()) {
-                ComposicaoTime composicaoTime = new ComposicaoTime();
-                composicaoTime.setTime(time);
-                integranteRepository.findById(integranteId).ifPresent(integrante -> {
-                    composicaoTime.setIntegrante(integrante);
+            // Salvando o time na tabela de times
+            timeRepository.save(time);
 
-                composicaoTimeRepository.save(composicaoTime);   
-                });
-        }
-        return ResponseEntity.ok(time);
+            // Cadastra o time se receber o ID do integrante
+            for (Long integranteId: dto.getIntegrantesID()) {
+                    ComposicaoTime composicaoTime = new ComposicaoTime();
+                    composicaoTime.setTime(time);
+                    integranteRepository.findById(integranteId).ifPresent(integrante -> {
+                        composicaoTime.setIntegrante(integrante);
+
+                    composicaoTimeRepository.save(composicaoTime);   
+                    });
+            }
+            return ResponseEntity.ok(time);
     }
 
     @GetMapping("/timenadata")
