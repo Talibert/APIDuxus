@@ -3,6 +3,20 @@
 Utilizei o postgresql como banco de dados e as informações para conexão estão no arquivo application.properties. O aplicativo desenvolvido para se comunicar com a API foi feito com REACT e está utilizando a porta 3000. A API está rodando na porta 8080.
 Inicie o projeto do frontend com o comando "npm start" e o projeto do backend com o comando "mvn spring-boot:run".
 
+# Endpoints
+
+Caso realizem testes em clientes HTTP, utilizem os Endpoints:
+
+Cadastrar integrantes - 'http://localhost:8080/duxus/integrante/cadastro'
+Cadastrar times - 'http://localhost:8080/duxus/time/cadastro'
+Contagem por franquia - 'http://localhost:8080/duxus/time/contagemfranquia'
+Contagem por função - 'http://localhost:8080/duxus/time/contagemfuncao'
+Franquia mais famosa - 'http://localhost:8080/duxus/time/franquiamaisfamosa'
+Função mais comum - 'http://localhost:8080/duxus/time/funcaomaiscomum'
+Integrante mais usado - 'http://localhost:8080/duxus/integrante/integrantemaisusado'
+Time da data - 'http://localhost:8080/duxus/time/timenadata'
+Time mais comum - 'http://localhost:8080/duxus/time/timemaiscomum'
+
 # Desafio de Desenvolvimento
 
 O objetivo deste desafio é obter uma ideia das habilidades que o candidato possui, da organização de tempo e também do código.
